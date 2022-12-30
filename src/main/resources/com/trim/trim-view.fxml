@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="847.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trim.Controller">
+    <children>
+        <Pane id="anchor" fx:id="anchor" prefHeight="497.0" prefWidth="847.0">
+            <children>
+                <ImageView fitHeight="261.0" fitWidth="824.0" layoutX="11.0" layoutY="14.0" pickOnBounds="true">
+                    <image>
+                        <Image url="@../../Images/f18frontprofile.JPG" />
+                    </image>
+                </ImageView>
+                <Button fx:id="submitButton" layoutX="696.0" layoutY="434.0" mnemonicParsing="false" onAction="#calculateTrim" text="Submit" />
+                <TextField fx:id="FuelLoad" layoutX="123.0" layoutY="325.0" prefHeight="25.0" prefWidth="42.0" text="100">
+                    <tooltip>
+                        <Tooltip text="Enter the percentage of fuel loaded" />
+                    </tooltip></TextField>
+                <TitledPane fx:id="results" animated="false" collapsible="false" layoutX="197.0" layoutY="317.0" prefHeight="154.0" prefWidth="365.0" text="Results">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="363.0">
+                            <children>
+                                <Text fx:id="TotalWeightText" layoutX="16.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Weight (lb):" />
+                                <Text fx:id="CatPitchTrimText" layoutX="215.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cat. Pitch Trim:" />
+                                <Text fx:id="AsymmetricTorqueText" layoutX="11.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asymmetry (ft/lb):" />
+                                <Text fx:id="AsymmetricTrimText" layoutX="202.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asymmetric Trim:" />
+                                <Text fx:id="CenterOfGravityText" layoutX="15.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Center of Gravity:" />
+                                <Text fx:id="NoseLiftoffText" layoutX="200.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nosewheel Liftoff:" wrappingWidth="95.103515625" />
+                                <Text fx:id="FuelWeightText" layoutX="10.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fuel Weight:" textAlignment="RIGHT" wrappingWidth="96.03515625" />
+                                <Text fx:id="TakeoffSpeedText" layoutX="182.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Takeoff Speed (KIAS):" />
+                                <Label fx:id="TotalWeightLabel" layoutX="121.0" layoutY="14.0" text="----" />
+                                <Label fx:id="AsymmetryLabel" layoutX="121.0" layoutY="40.0" text="----" />
+                                <Label fx:id="FuelWeightLabel" layoutX="121.0" layoutY="91.0" text="----" />
+                                <Label fx:id="COGLabel" layoutX="121.0" layoutY="65.0" text="----" />
+                                <Label fx:id="CatPitchLabel" layoutX="308.0" layoutY="14.0" text="----" />
+                                <Label fx:id="AsymmetricTrimLabel" layoutX="308.0" layoutY="40.0" text="----" />
+                                <Label fx:id="NoseLiftoffLabel" layoutX="308.0" layoutY="65.0" text="----" />
+                                <Label fx:id="TakeoffSpeedLabel" layoutX="308.0" layoutY="91.0" text="----" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+                <Slider fx:id="fuelSlider" blockIncrement="1.0" layoutX="27.0" layoutY="370.0" onDragDropped="#setFuelText" onMouseDragged="#setFuelText" showTickMarks="true" value="100.0" />
+                <TextField fx:id="GunLoad" layoutX="124.0" layoutY="408.0" prefHeight="25.0" prefWidth="41.0" text="578">
+                    <tooltip>
+                        <Tooltip text="Enter how many gun rounds are loaded" />
+                    </tooltip>
+                </TextField>
+                <Slider fx:id="bulletSlider" blockIncrement="20.0" layoutX="27.0" layoutY="446.0" majorTickUnit="125.0" max="578.0" onMouseDragged="#setBulletText" showTickMarks="true" value="578.0" />
+                <Button fx:id="saveButton" layoutX="749.0" layoutY="325.0" mnemonicParsing="false" onAction="#saveLoadout" text="Save" textFill="#2ba412" />
+                <Label layoutX="29.0" layoutY="329.0" text="Internal Fuel: %" />
+                <Label layoutX="36.0" layoutY="412.0" text="Gun Rounds:" />
+                <TextField fx:id="LoadoutName" layoutX="585.0" layoutY="325.0" prefHeight="25.0" prefWidth="159.0" promptText="Enter Loadout Name" />
+                <ChoiceBox fx:id="loadoutSelector" layoutX="585.0" layoutY="382.0" prefHeight="25.0" prefWidth="159.0" />
+                <Button fx:id="LoadButton" layoutX="748.0" layoutY="382.0" mnemonicParsing="false" onAction="#loadLoadout" text="Load" />
+                <Label fx:id="nameError" layoutX="600.0" layoutY="309.0" text="You must enter a name" textFill="#eb0909" visible="false" />
+                <Label fx:id="usedNameError" layoutX="83.0" layoutY="474.0" text="Name already used!" textFill="#e40101" visible="false" />
+                <Button fx:id="deleteButton" layoutX="619.0" layoutY="434.0" mnemonicParsing="false" onAction="#deleteLoadout" text="Delete" textFill="#d30c0c" />
+                <Label fx:id="selectLoadoutError" layoutX="619.0" layoutY="362.0" text="Please select Loadout" textFill="#d30a0a" visible="false" />
+                <MenuButton fx:id="Station9" layoutX="25.0" layoutY="205.0" maxWidth="100.0" mnemonicParsing="false" text="STATION 9" textAlignment="CENTER">
+                    <items>
+                        <Menu fx:id="AAMissilesStation9" mnemonicParsing="false" text="A/A MISSILES" />
+                        <Menu fx:id="PodsStation9" mnemonicParsing="false" text="PODS" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                    <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                    </padding>
+                </MenuButton>
+                <MenuButton fx:id="Station1" layoutX="730.0" layoutY="205.0" maxWidth="100.0" mnemonicParsing="false" text="STATION 1" textAlignment="CENTER">
+                    <items>
+                        <Menu fx:id="AAMissilesStation1" mnemonicParsing="false" text="A/A MISSILES" />
+                        <Menu fx:id="PodsStation1" mnemonicParsing="false" text="PODS" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                    <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                    </padding>
+                </MenuButton>
+                <MenuButton fx:id="Station8" alignment="CENTER" contentDisplay="CENTER" layoutX="143.0" layoutY="205.0" maxWidth="100.0" mnemonicParsing="false" text="STATION 8">
+                    <items>
+                        <Menu fx:id="AAMissilesStation8" mnemonicParsing="false" text="A/A MISSILES" />
+                        <Menu fx:id="AGMissilesStation8" mnemonicParsing="false" text="A/G MISSILES" />
+                        <Menu fx:id="BombsStation8" mnemonicParsing="false" text="BOMBS" />
+                        <Menu fx:id="PodsStation8" mnemonicParsing="false" text="PODS" />
+                        <Menu fx:id="RocketsStation8" mnemonicParsing="false" text="ROCKETS" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                    <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                    </padding>
+                </MenuButton>
+                <MenuButton fx:id="Station2" alignment="CENTER" contentDisplay="CENTER" layoutX="608.0" layoutY="205.0" maxWidth="100.0" mnemonicParsing="false" text="STATION 2" textAlignment="CENTER">
+                    <items>
+                        <Menu fx:id="AAMissilesStation2" mnemonicParsing="false" text="A/A MISSILES" />
+                        <Menu fx:id="AGMissilesStation2" mnemonicParsing="false" text="A/G MISSILES" />
+                        <Menu fx:id="BombsStation2" mnemonicParsing="false" text="BOMBS" />
+                        <Menu fx:id="PodsStation2" mnemonicParsing="false" text="PODS" />
+                        <Menu fx:id="RocketsStation2" mnemonicParsing="false" text="ROCKETS" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                    <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                    </padding>
+                </MenuButton>
+                <MenuButton fx:id="Station7" alignment="CENTER" contentDisplay="CENTER" layoutX="224.0" layoutY="243.0" maxWidth="100.0" mnemonicParsing="false" text="STATION 7" textAlignment="CENTER">
+                    <items>
+                        <Menu fx:id="AAMissilesStation7" mnemonicParsing="false" text="A/A MISSILES" />
+                        <Menu fx:id="AGMissilesStation7" mnemonicParsing="false" text="A/G MISSILES" />
+                        <Menu fx:id="BombsStation7" mnemonicParsing="false" text="BOMBS" />
+                        <Menu fx:id="FuelStation7" mnemonicParsing="false" text="FUEL TANKS" />
+                        <Menu fx:id="PodsStation7" mnemonicParsing="false" text="PODS" />
+                        <Menu fx:id="RocketsStation7" mnemonicParsing="false" text="ROCKETS" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                </MenuButton>
+                <MenuButton fx:id="Station3" alignment="CENTER" contentDisplay="CENTER" layoutX="525.0" layoutY="243.0" maxWidth="100.0" mnemonicParsing="false" text="STATION 3" textAlignment="CENTER">
+                    <items>
+                        <Menu fx:id="AAMissilesStation3" mnemonicParsing="false" text="A/A MISSILES" />
+                        <Menu fx:id="AGMissilesStation3" mnemonicParsing="false" text="A/G MISSILES" />
+                        <Menu fx:id="BombsStation3" mnemonicParsing="false" text="BOMBS" />
+                        <Menu fx:id="FuelStation3" mnemonicParsing="false" text="FUEL TANKS" />
+                        <Menu fx:id="PodsStation3" mnemonicParsing="false" text="PODS" />
+                        <Menu fx:id="RocketsStation3" mnemonicParsing="false" text="ROCKETS" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                </MenuButton>
+                <MenuButton fx:id="Station6" contentDisplay="CENTER" layoutX="299.0" layoutY="205.0" maxWidth="100.0" mnemonicParsing="false" text="STATION 6" textAlignment="CENTER">
+                    <items>
+                        <Menu fx:id="AAMissilesStation6" mnemonicParsing="false" text="A/A MISSILES" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                </MenuButton>
+                <MenuButton fx:id="Station4" alignment="CENTER" contentDisplay="CENTER" layoutX="449.0" layoutY="205.0" maxWidth="100.0" mnemonicParsing="false" text="STATION 4" textAlignment="CENTER">
+                    <items>
+                        <Menu fx:id="AAMissilesStation4" mnemonicParsing="false" text="A/A MISSILES" />
+                        <Menu fx:id="PodsStation4" mnemonicParsing="false" text="PODS" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                </MenuButton>
+                <MenuButton fx:id="Station5" alignment="CENTER" contentDisplay="CENTER" layoutX="374.0" layoutY="243.0" maxWidth="100.0" mnemonicParsing="false" text="STATION 5" textAlignment="CENTER">
+                    <items>
+                        <Menu fx:id="BombsStation5" mnemonicParsing="false" text="BOMBS" />
+                        <Menu fx:id="FuelStation5" mnemonicParsing="false" text="FUEL TANKS" />
+                        <Menu fx:id="PodsStation5" mnemonicParsing="false" text="PODS" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                </MenuButton>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>
